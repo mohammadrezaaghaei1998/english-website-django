@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="success">{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+<section id="specials" class="specials" style="margin-top:50px;">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title" style="margin-bottom:20px; right:-70px;">
+        <h2>Videos</h2>
+      </div>
+      <div class="row" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-lg-3" style="background:black;">
+        {% if user_packages %}
+          <ul class="nav nav-tabs flex-column" >
+            {% for user_package in user_packages %}
+                {% if forloop.first %}
+                    <li class="nav-item" style="border-right:5px solid #06BBCC;">
+                    <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1"><p>{{ user_package.package.id }}.{{ user_package.package.name }}</p></a>
+                    </li>
+                {% endif %}
+                {% if forloop.counter == 2 %}
+                    <li class="nav-item" style="border-right:5px solid #06BBCC;">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab-2"><p>{{ user_package.package.id }}.{{ user_package.package.name }}</p></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        </div>
+        <div class="col-lg-9 mt-4 mt-lg-0" style="background:black; color:#06BBCC;">
+            <div class="tab-content">
+              <div class="tab-pane active show" id="tab-1">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    {% if user_packages %}
+                      <ul>
+                        {% for user_package in user_packages %}
+                            {% if user_package.unlocked and forloop.counter == 1 %}
+                            <li>
+                                <h4 class="hb" style="color:white;">{{ user_package.package.name }}</h4>
+                                <li style="display: flex; align-items: center;">
+                                    <div style="flex-grow: 1; margin-left: 20px;">
+                                      <ul style="list-style: none; padding: 0;">
+                                        {% for video in user_package.package.video_set.all %}
+                                            <li style="margin-bottom: 10px;">
+                                                <span>{{ video.title }}</span>
+                                                <a href="#video-{{ video.id }}" style="display: flex; align-items: center; padding-left:250px;">
+                                                <video controls width="500" height="300" style="margin-left: 10px;">
+                                                    <source src="{{ video.video_file.url }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                      </ul>
+                                    </div>
+                                </li> 
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p style="color: white;">You don't have any available packages.</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-2">
+                <div class="row">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    {% if user_packages %}
+                      <ul>
+                        {% for user_package in user_packages %}
+                          {% if user_package.unlocked and forloop.counter == 2 %}
+                            <li>
+                              <h4 class="hb" style="color:white;">{{ user_package.package.name }}</h4>
+                              <div class="video-container">
+                                <ul class="video-title-list" style="list-style: none; padding: 0;">
+                                  {% for video in user_package.package.video_set.all %}
+                                    <li class="video-title-item">
+                                      <a href="#video-{{ video.id }}" style="display: flex; align-items: center;">
+                                        <span>{{ video.title }}</span>
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                                <div class="video-player-container" style="height: 200px; overflow: auto;">
+                                  <ul class="video-player-list" style="list-style: none; padding: 0;">
+                                    {% for video in user_package.package.video_set.all %}
+                                      <li class="video-player-item" id="video-{{ video.id }}">
+                                        <a href="#video-{{ video.id }}" style="display: flex; align-items: center;">
+                                          <video controls width="500" height="300" style="margin-left: 10px;">
+                                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                          </video>
+                                        </a>
+                                      </li>
+                                    {% endfor %}
+                                  </ul>
+                                </div>
+                              </div>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p style="color: white;">You don't have any available packages.</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </section><!-- End Specials Section -->
+
+{% endblock %}

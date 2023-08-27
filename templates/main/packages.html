@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="tab-pane" id="tab-2" >
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s" style="padding-top:40px;" >
+        <h6 class="section-title bg-white text-center text-primary px-3" >Package Details</h6>
+    </div>
+    <div class="row justify-content-center align-items-center" >
+        <div class="col-lg-4 details order-lg-2 text-center" style="border: 3px solid #06BBCC; border-radius:5px;  width:400px; margin-top:20px; background:black;">
+            <div class="package-details" style="padding: 20px; background-color: black; transition: transform 0.3s;">
+                
+                <img src="{{ package.image.url }}" alt="{{ package.name }} Image" class="img-fluid" style="max-width: 100%; height: auto;">
+
+                <h4 style="color:#06BBCC;">{{ package.name }}</h4>
+                <p style="color: white;">{{ package.description }}</p>
+                <p style="color: white;">Price: {{ package.price }}</p>
+                {% if user_package and user_package.unlocked %}
+                    <p style="color: white;">You have access to videos for this package.</p>
+                {% else %}
+                    <p style="color: white;">You don't have access to videos for this package.</p>
+                    <a href="{% url 'purchase_package' package.id %}" class="btn btn-primary" style="margin-top: 10px;">Purchase Package</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

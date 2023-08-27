@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<h1>Payment Successful</h1>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<h1>{{ selected_package.title }}</h1>
+<p>{{ selected_package.description }}</p>
+<img src="{{ selected_package.image.url }}" alt="{{ selected_package.title }} Image">
+<p>Price: {{ selected_package.price }}</p>
+
+<h2>Unlocked Videos:</h2>
+<ul>
+  {% for video in unlocked_videos %}
+    <li><a href="{{ video.video_file.url }}">{{ video.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

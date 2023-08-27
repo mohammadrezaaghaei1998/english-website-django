@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+
+{% block content %}
+{% if messages %}
+        <ul class="messages text-center"  style="padding-top: 50px;">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+<div class="container wow fadeInUp" style="max-width: 400px;
+ margin: 0 auto;
+ padding: 20px;
+  border: 3px solid #06BBCC;
+   border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    background:black;
+    color:white;">
+    
+    <h2 style="text-align: center; margin-bottom: 20px; color:#06BBCC;">Login</h2>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username" style="font-weight: bold;">Username</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password" style="font-weight: bold;">Password</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <div style="text-align: center; margin-top:15px;">
+            <button type="submit" class="btn btn-primary" style="width: 50%;">Login</button>
+        </div>
+    </form>
+    <div>
+        <p style="text-align: center; margin-top: 15px;"> <a href="{% url 'reset_password' %}">Forgot Password</a></p>    
+        <p style="text-align: center; ">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        <div style="text-align: center; color: white">
+            <a href="{% provider_login_url 'google' %}"?next=/ style="display: inline-block; padding: 10px 20px;  color: white; text-decoration: none; font-weight: bold;">
+                <img src="{% static "img/google-logo.png" %}" alt="Google Logo" style="vertical-align: middle; margin-right: 10px; filter: invert(100%);
+                 border: 2px solid white white; border-radius: 50%;  width: 30px; height: 30px; "> Sign in with Google
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock  %}

@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% block content  %}
+
+<div class="tab-pane" id="tab-2" >
+  <div class="row" >
+      <div class="col-lg-8 details order-2 order-lg-1">
+        <div><h3 class="h1" style="color:#06BBCC;">Packages</h3></div>
+          <ul>
+              {% for user_package in user_packages %}
+                  <li>
+                      <h4>{{ user_package.package.name }}</h4>
+                      {% if user_package.unlocked or user.is_authenticated %}
+                          <ul>
+                              {% for video in user_package.package.video_set.all %}
+                                  <li><a href="{{ video.video_file.url }}">{{ video.title }}</a></li>
+                              {% endfor %}
+                          </ul>
+                      {% else %}
+                          <p style="color: white;">You don't have access to videos. Please complete the payment to unlock.</p>
+                      {% endif %}
+                  </li>
+              {% endfor %}
+          </ul>
+      </div>
+  </div>
+</div>
+{% endblock  %}

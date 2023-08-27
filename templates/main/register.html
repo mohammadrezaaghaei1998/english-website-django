@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load static %}
+{% load socialaccount %}
+
+{% if messages %}
+<ul class="messages text-center"  style="padding-top: 50px;">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="container wow fadeInUp" style="max-width: 700px;
+ margin: 0 auto;
+ padding: 20px;
+  border: 3px solid #06BBCC;
+   border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    background:black;
+    color:white;">
+    <h2 style="text-align: center; margin-bottom: 20px; color:#06BBCC;">Register</h2>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="first_name" style="display: block; font-weight: bold; color: #06BBCC;">First Name</label>
+                    <input type="text" id="first_name" name="first_name" required class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="last_name" style="display: block; font-weight: bold; color: #06BBCC;">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" required class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="phone_number" style="display: block; font-weight: bold; color: #06BBCC;">Phone Number</label>
+                    <input type="tel" id="phone_number" name="phone_number" required class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="username" style="display: block; font-weight: bold; color: #06BBCC;">Username</label>
+                    <input type="text" id="username" name="username" required class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" style="display: block; font-weight: bold; color: #06BBCC;">Email</label>
+            <input type="email" id="email" name="email" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="password" style="display: block; font-weight: bold; color: #06BBCC;">Password</label>
+            <input type="password" id="password" name="password" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="confirm-password" style="display: block; font-weight: bold; color: #06BBCC;">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm_password" required class="form-control">
+        </div>
+        <div style="text-align: center; margin-top:15px; ">
+            <button type="submit" class="btn btn-primary" style="width: 25%;">Register</button>
+        </div>
+    </form>
+    <p style="text-align: center; margin-top: 25px; color: white;">Already have an account? <a href="{% url 'login' %}" >Login</a></p>
+
+    <div style="text-align: center; color: white">
+        <a href="{% provider_login_url 'google' %}?next=/choose-account/" style="display: inline-block; padding: 5px 20px;  color: white; text-decoration: none; font-weight: bold;">
+            <img src="{% static "img/google-logo.png" %}" alt="Google Logo" style="vertical-align: middle; margin-right: 10px; filter: invert(100%);
+             border: 2px solid white white; border-radius: 50%;  width: 30px; height: 30px; "> Continue with Google account
+        </a>
+    </div>
+
+</div>
+{% endblock  %}

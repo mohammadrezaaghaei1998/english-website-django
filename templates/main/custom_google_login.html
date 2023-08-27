@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div style="text-align: center; padding-top: 70px;">
+        <h2>Continue with Google Sign-In</h2>
+        <p>Choose your account to continue:</p>
+        
+        <!-- Your custom content and styling here -->
+        
+        <a href="{% url 'google_login' %}" class="btn btn-primary">Continue</a>
+    </div>
+{% endblock %}

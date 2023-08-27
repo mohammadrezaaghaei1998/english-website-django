@@ -1,0 +1,135 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="success">{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+<section id="specials" class="specials" style="margin-top:50px; ">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title" style="margin-bottom:20px; left: 450px; padding: 5px; ">
+        <h2>Profile</h2>
+      </div>
+      <div class="row" data-aos="fade-up" data-aos-delay="100" style="border: 2px solid #06BBCC; border-radius: 5px;">
+        <div class="col-lg-3" style="background:black;">
+          <ul class="nav nav-tabs flex-column" >
+            <li class="nav-item" style="border-right:5px solid #06BBCC;">
+              <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1"><p>Personal Information</p></a>
+            </li>
+            <li class="nav-item" style="border-right:5px solid #06BBCC;">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab-2"><p>Package</p></a>
+            </li>
+            <li class="nav-item" style="border-right:5px solid #06BBCC;">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Change Password</a>
+            </li>
+            <li class="nav-item" style="border-right:5px solid #06BBCC;"> 
+              <a class="nav-link" data-bs-toggle="tab" href="#tab-4">Nostrum qui quasi</a>
+            </li>
+            <li class="nav-item" style="border-right:5px solid #06BBCC;">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab-5">Iusto ut expedita aut</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-9 mt-4 mt-lg-0" style="background:black; color:#06BBCC;">
+          <div class="tab-content" >
+            <div class="tab-pane active show" id="tab-1">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                
+                    <h3 class="h" style="color:#06BBCC;">Personal Information</h3>
+                    <p class="fst-italic">Username: {{ user.username }}</p>
+                    <p>Email Address: {{ user.email }}</p>
+                {% if user_information %}
+                    <p>First Name: {{ user_information.first_name }}</p>
+                    <p>Last Name: {{ user_information.last_name }}</p>
+                    <p>Phone Number: {{ user_information.phone_number }}</p>
+                {% else %}
+                    <p>No more user information available.</p>
+                {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-2">
+                <div class="row">
+                    <div class="col-lg-8 details order-2 order-lg-1">
+                        <h3 class="h1" style="color:#06BBCC;">Packages</h3>
+                        {% if user_packages %}
+                            <ul>
+                                {% for user_package in user_packages %}
+                                    <li>
+                                        <h4 class="hb" style="color:white;">{{ user_package.package.name }}</h4>
+                                        {% if user_package.unlocked %}
+                                            <ul>
+                                                {% for video in user_package.package.video_set.all %}
+                                                    <li><a  href="{{ video.video_file.url }}">{{ video.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <p style="color: white;">You don't have any unlocked videos.</p>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p style="color: white;">You don't have any available packages.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-3">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                  <h3 class="h2" style="color:#06BBCC;">Change Password</h3>
+                  {% if user.socialaccount_set.all %}
+                    <p>You are logged in with a Google account and cannot change your password.</p>
+                  {% else %}
+                    <form method="post"  style="max-width: 400px;
+                    margin: 0 auto;
+                    margin-bottom:5px;
+                      padding: 20px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+                      ">
+                      {% csrf_token %}
+                      {{ change_password_form.as_p }}
+                      <button type="submit" style="background-color: #007bff;
+                      color: #fff;
+                        border: none;
+                        padding: 10px 20px;
+                          border-radius: 5px;
+                          cursor: pointer;">Change Password</button>
+                  </form>
+                {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-4">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                  <h3 class="h3" style="color:#06BBCC;">Fuga dolores inventore laboriosam ut est accusamus laboriosam dolore</h3>
+                  <p class="fst-italic">Totam aperiam accusamus. Repellat consequuntur iure voluptas iure porro quis delectus</p>
+                  <p>Eaque consequuntur consequuntur libero expedita in voluptas. Nostrum ipsam necessitatibus aliquam fugiat debitis quis velit. Eum ex maxime error in consequatur corporis atque. Eligendi asperiores sed qui veritatis aperiam quia a laborum inventore</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-5">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                  <h3 class="h4" style="color:#06BBCC;">Est eveniet ipsam sindera pad rone matrelat sando reda</h3>
+                  <p class="fst-italic">Omnis blanditiis saepe eos autem qui sunt debitis porro quia.</p>
+                  <p>Exercitationem nostrum omnis. Ut reiciendis repudiandae minus. Omnis recusandae ut non quam ut quod eius qui. Ipsum quia odit vero atque qui quibusdam amet. Occaecati sed est sint aut vitae molestiae voluptate vel</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Specials Section -->
+
+{% endblock %}

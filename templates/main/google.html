@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block content %}
+
+<div style="text-align: center; padding-top:70px;">
+    <a href="{% provider_login_url 'google' %}" style="display: inline-block; padding: 10px 20px; background-color: #4285F4; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+        <img src="{% static "img/google-logo.png" %}" alt="Google Logo" style="vertical-align: middle; margin-right: 10px;"> Sign in with Google
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="purchase-form p-4" style="background-color: black; border:3px solid #06BBCC; border-radius:5px; ">
+                    <h1 class="mb-4 text-center text-light">Purchase Package</h1>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% if user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group" >
+                            <label for="{{ form.package.id_for_label }}" class="text-light">{{ form.package.label }} {{ form.package }}</label>
+                            
+                        </div>
+                        
+                        <div class="form-group d-flex">
+                            <div class="mr-2 flex-grow-1">
+                                <label for="{{ form.card_number.id_for_label }}" class="text-light">{{ form.card_number.label }}</label>
+                                {{ form.card_number }}
+                            </div>
+                            <div class="ml-2 flex-grow-1">
+                                <label for="{{ form.cvv.id_for_label }}" class="text-light">{{ form.cvv.label }}</label>
+                                {{ form.cvv }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group d-flex">
+                            <div class="mr-2 flex-grow-1">
+                                <label for="{{ form.exp_date.id_for_label }}" class="text-light">{{ form.exp_date.label }}</label>
+                                {{ form.exp_date }}
+                            </div>
+                            <div class="ml-2 flex-grow-1">
+                                <label for="{{ form.card_name.id_for_label }}" class="text-light">{{ form.card_name.label }}</label>
+                                {{ form.card_name }}
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 mt-4" type="submit">Purchase</button>
+                    </form>
+                    
+                    {% if form.errors %}
+                        <div class="errors mt-4">
+                            <p class="text-light">Errors:</p>
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    <li>{{ field }}: {{ errors|join:", " }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% else %}  
+                    
+                    <p class="mt-4 text-light" style="text-align:center;">Please <a href="{% url 'login' %}" class="text-primary">log in</a> to purchase the package.</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

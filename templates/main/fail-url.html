@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="background-color: black; color: white; margin: 40px auto; width: 500px; border-radius: 5px;">
+    <div style="border: 2px solid #06BBCC; border-radius: 5px; text-align: center; padding: 20px;">
+        <h1 style="color:#06BBCC;">Payment Failed</h1>
+        <p>{{ message }}</p>
+    </div>
+</div>
+{% endblock %}
